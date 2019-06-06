@@ -1,33 +1,145 @@
-.App {
-  text-align: center;
+strong {
+  color: red;
+}
+svg {
+  width: 682px;
+  height: 625px;
+}
+.test {
+  width: 682px;
+  height: 625px;
+  position: relative;
+}
+.test img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 1px);
+}
+.container {
+  margin: 60px 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+/* Test 1: Mask on image, scale image on hover. Scales mask as well (and flickers?) */
+.test1 img {
+  mask-image: url(./window.png);
+  mask-position: center center;
+  mask-repeat: no-repeat;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.test1:hover img {
+  transform: scale(1.05);
 }
 
-.App-link {
-  color: #61dafb;
+/* Test 2: Mask on container, scale image on hover */
+.test2  {
+  mask-image: url(./window.png);
+  mask-position: center center;
+  mask-repeat: no-repeat;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.test2:hover img {
+  transform: scale(1.05);
 }
+
+/* Test 3: Mask on container, reverse scale */
+.test3  {
+  mask-image:  url(./window.png);
+  mask-position: center center;
+  mask-repeat: no-repeat;
+  transition: transform 0.5s;
+  transform: scale(0.95) translate3d(0, 0, 1px);
+  will-change: transform;
+}
+
+.test3:hover {
+  transform: scale(1);
+}
+.test3 img {
+  transform: scale(1.05) translate3d(0, 0, 1px);
+  will-change: transform;
+
+}
+.test3:hover img {
+  transform: scale(1);
+}
+
+/* Test 4: Mask size zoom out */
+.test4  {
+  mask-image:  url(./window.png);
+  mask-position: center center;
+  mask-repeat: no-repeat;
+  transition: mask-size 0.5s;
+  transform: translate3d(0, 0, 0);
+  mask-size: 85%;
+  will-change: mask-size;
+}
+
+.test4:hover {
+  mask-size:  100%;
+}
+.test4 img {
+  transform: translate(10%, 10%) scale(1.1);
+  will-change: transform;
+}
+.test4:hover img {
+  transform: scale(1);
+}
+
+/* Test 5: Mask size zoom in*/
+.test5  {
+  mask-image:  url(./window.png);
+  mask-position: center center;
+  mask-repeat: no-repeat;
+  transition: mask-size 0.5s;
+  transform: translate3d(0, 0, 0);
+  mask-size:  120% 120%;
+}
+.test5:hover {
+  mask-size: 85% 85%;
+}
+.test5 img {
+  transform: scale(1);
+
+}
+.test5:hover img {
+  transform: translate(10%, 10%) scale(1.15);
+}
+
+/* Test 6: nested mask*/
+.test6  {
+  mask-image:  url(./window.png);
+  mask-position: -20px 0;
+  mask-repeat: no-repeat;
+  transition: mask-position 0.4s;
+  transform: translate3d(0, 0, 0);
+  mask-size: 100% 100%;
+}
+.test6 .innerMask  {
+  mask-image:  url(./window.png);
+  mask-position: 20px 0;
+  mask-repeat: no-repeat;
+  transition: mask-position 0.4s;
+  transform: translate3d(0, 0, 0);
+  mask-size:  100% 100%;
+}
+.test6:hover {
+  mask-position:  0 0;
+}
+.test6:hover .innerMask {
+  mask-position:  0 0;
+}
+.test6 img {
+  transform: scale(1.05);
+}
+.test6:hover img {
+  transform: scale(1);
+}
+
+/*
+  Test 7: svg clip path
+  https://tympanus.net/codrops/2015/06/18/card-expansion-effect-svg-clippath/
+*/
